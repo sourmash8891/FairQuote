@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FairQuote — Honest garage quote analysis</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <span class="logo">🔧 FairQuote</span>
+      <span class="tagline">Honest analysis of your garage quote</span>
+    </div>
+  </header>
+
+  <main class="app-wrap">
+
+    <div class="progress-bar" id="progressBar">
+      <div class="progress-step" id="ps1"></div>
+      <div class="progress-step" id="ps2"></div>
+      <div class="progress-step" id="ps3"></div>
+    </div>
+
+    <div class="step active" id="step1">
+
+      <div class="field-group">
+        <label class="field-label" for="regInput">Your vehicle <span class="required-star">*</span></label>
+        <div class="reg-row">
+          <div class="reg-input-wrap">
+            <input type="text" class="reg-input" id="regInput" placeholder="AB12 CDE" maxlength="8" oninput="this.value=this.value.toUpperCase()" />
+            <p class="dvla-note">UK registration plate lookup</p>
+          </div>
+          <button class="btn-lookup" id="lookupBtn" onclick="lookupReg()">🔍 Look up</button>
+        </div>
+        <div class="car-result" id="carResult"></div>
+        <p class="manual-toggle" id="manualToggle" onclick="toggleManual()">Enter vehicle details manually instead</p>
+        <div class="manual-fields" id="manualFields">
+          <div class="row-3">
+            <div class="field-group">
+              <label class="field-label">Make</label>
+              <input type="text" id="manualMake" placeholder="e.g. Ford">
+            </div>
+            <div class="field-group">
+              <label class="field-label">Model</label>
+              <input type="text" id="manualModel" placeholder="e.g. Focus">
+            </div>
+            <div class="field-group">
+              <label class="field-label">Year</label>
+              <input type="text" id="manualYear" placeholder="e.g. 2018">
+            </div>
+          </div>
+          <div class="row-2">
+            <div class="field-group">
+              <label class="field-label">Engine</label>
+              <input type="text" id="manualEngine" placeholder="e.g. 1.5 diesel">
+            </div>
+            <div class="field-group">
+              <label class="field-label">Mileage</label>
+              <input type="text" id="manualMileage" placeholder="e.g. 65,000">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row-2">
+        <div class="field-group">
+          <label class="field-label" for="region">Your region <span class="required-star">*</span></label>
+          <select id="region">
+            <option value="">Select region</option>
+            <option>London</option>
+            <option>South East</option>
+            <option>South West</option>
+            <option>East of England</option>
+            <option>East Midlands</option>
+            <option>West Midlands</option>
+            <option>Yorkshire</option>
+            <option>North West</option>
+            <option>North East</option>
+            <option>Scotland</option>
+            <option>Wales</option>
+            <option>Northern Ireland</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="garageType">Garage type <span class="required-star">*</span></label>
+          <select id="garageType">
+            <option value="">Select type</option>
+            <option>Independent garage</option>
+            <option>Main dealership</option>
+            <option>Fast-fit chain (Kwik-Fit etc)</option>
+            <option>Not sure</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label" for="symptoms">Why did you take it in? Any symptoms? <span class="required-star">*</span></label>
+        <input type="text" id="symptoms" placeholder="e.g. Grinding noise when braking, MOT advisory on rear tyres">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label" for="quoteText">Your garage quote <span class="required-star">*</span></label>
+        <textarea id="quoteText" placeholder="e.g. Brake pads front axle — £180 parts, £90 labour. Timing belt — £320 parts, £240 labour..."></textarea>
+        <p class="hint">Include job descriptions, parts costs, and labour costs where shown</p>
+      </div>
+
+      <p class="error-msg" id="formError">Please fill in all required fields before continuing</p>
+      <button class="btn-primary" onclick="goToStep2()">Analyse this quote →</button>
+
+    </div>
+
+    <div class="step" id="step2">
+      <div class="loading-wrap">
+        <div class="spinner"></div>
+        <p id="loadingMsg">Checking labour times for your vehicle...</p>
+      </div>
+    </div>
+
+    <div class="step" id="step3">
+      <div id="resultsContainer"></div>
+      <button class="btn-secondary" onclick="resetApp()">Check another quote</button>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>FairQuote gives guidance based on industry knowledge and regional averages. Always discuss concerns directly with your garage. Not a substitute for professional advice.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
