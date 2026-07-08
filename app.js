@@ -174,25 +174,17 @@ ${quote}
 Please analyse this quote honestly and return JSON only.`;
 
   try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+    const response = await fetch('/api/analyse', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': ANTHROPIC_API_KEY
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
-        max_tokens: 1000,
-        system: systemPrompt,
-        messages: [{ role: 'user', content: userMsg }]
-      })
+      body: JSON.stringify({ vehicle, region, garageType, symptoms, quote })
     });
 
     clearInterval(msgInterval);
-    const data = await response.json();
-    const raw = data.content.map(i => i.text || '').join('');
-    const clean = raw.replace(/```json|```/g, '').trim();
-    const result = JSON.parse(clean);
+    const result = await response.json();
+    if (result.error) throw new Error(result.error);
     renderResults(result);
   } catch (err) {
     clearInterval(msgInterval);
