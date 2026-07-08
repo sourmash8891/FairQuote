@@ -1,4 +1,4 @@
-const ANTHROPIC_API_KEY = 'YOUR_API_KEY_HERE';
+const ANTHROPIC_API_KEY = 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
 
 let vehicleData = null;
 let manualMode = false;
